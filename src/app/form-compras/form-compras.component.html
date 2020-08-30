@@ -75,7 +75,7 @@
                         <div class="form-group col-sm-8">
                             <label>Dui cliente:</label>
                             <input type="text" required name="duiCliente" [(ngModel)]="duiCliente" #duivalidar="ngModel"
-                                name="dui" class="form-control" pattern="[0-9]{6}\-[0-9]{1}" placeholder="######-#">
+                                name="dui" class="form-control" pattern="[0-9]{8}\-[0-9]{1}" placeholder="########-#">
                             <div *ngIf="duivalidar.invalid && (duivalidar.dirty || duivalidar.touched)">
                                 <p class="text-danger">Formato invalido</p>
                             </div>
@@ -86,7 +86,7 @@
                         <div class="form-group col-sm-8">
                             <label>Productos:</label>
                             <select required class="form-control" name="productoescogido" [(ngModel)]="productoEscogido"
-                                #productovalidar>
+                                #productovalidar="ngModel">
                                 <option *ngFor="let art of articulosTienda" [value]="art.nombre">{{art.nombre}}</option>
                             </select>
                             <div *ngIf="productovalidar.invalid && (productovalidar.dirty || productovalidar.touched)">
@@ -121,26 +121,28 @@
 
 
 <!-- tabla de registros -->
-<div class="container py-3" [hidden]="verTabla==false">
-    <p>Cantidad de registros {{cantidadRegistros}}</p>
-    <table class="table">
-        <thead class="thead-dark">
-            <tr>
-                <th scope="col">Nombre:</th>
-                <th scope="col">Dui:</th>
-                <th scope="col">Producto:</th>
-                <th scope="col">Pago:</th>
-                <th scope="col">Descuento:</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let registros of comprasRegistros">
-                <th>{{registros.nombre}}</th>
-                <th>{{registros.dui}}</th>
-                <th>{{registros.productoComprado}}</th>
-                <th>${{registros.totalCompra}}</th>
-                <th>${{registros.descuento}}</th>
-            </tr>
-        </tbody>
-    </table>
+<div [hidden]="estudiantebool==true">
+    <div class="container py-3" [hidden]="verTabla==false">
+        <p>Cantidad de registros {{cantidadRegistros}}</p>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre:</th>
+                    <th scope="col">Dui:</th>
+                    <th scope="col">Producto:</th>
+                    <th scope="col">Pago:</th>
+                    <th scope="col">Descuento:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let registros of comprasRegistros">
+                    <th>{{registros.nombre}}</th>
+                    <th>{{registros.dui}}</th>
+                    <th>{{registros.productoComprado}}</th>
+                    <th>${{registros.totalCompra}}</th>
+                    <th>${{registros.descuento}}</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

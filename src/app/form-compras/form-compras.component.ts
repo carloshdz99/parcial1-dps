@@ -30,11 +30,11 @@ export class FormComprasComponent implements OnInit {
 
   //variable con los productos a vender
   articulosTienda = [
-    { "nombre": "Tortas", "precio": 2.00, "codigoProducto": "ts200", "descripcion": "Ricas tortas mexicanas" },
-    { "nombre": "Pan con pollo", "precio": 1.50, "codigoProducto": "po150", "descripcion": "Panes con gallina" },
-    { "nombre": "Pupusas", "precio": 0.25, "codigoProducto": "ps100", "descripcion": "Variedad de ricas pupusas" },
-    { "nombre": "Hot Dogs", "precio": 1.00, "codigoProducto": "hs50", "descripcion": "Los mejores hot dogs del mundo" },
-    { "nombre": "Sandwich", "precio": 0.5, "codigoProducto": "sh00", "descripcion": "Sandwiches de pollo" }
+    { "nombre": "Taladro", "precio": 150, "codigoProducto": "to200", "descripcion": "Potente taladro de 800W" },
+    { "nombre": "Plancha", "precio": 16.50, "codigoProducto": "pa150", "descripcion": "Plancha a vapor" },
+    { "nombre": "Ventilador", "precio": 54.95, "codigoProducto": "vr100", "descripcion": "Ventilador de pared" },
+    { "nombre": "Lamina de hierro", "precio": 25.38, "codigoProducto": "lo50", "descripcion": "Lamina de hierro" },
+    { "nombre": "Lampara", "precio": 11.95, "codigoProducto": "la00", "descripcion": "Lampara para cabeza" }
   ];
 
   constructor() { }
@@ -46,36 +46,37 @@ export class FormComprasComponent implements OnInit {
     //console.log(form.value.nombre);
     //console.log(this.comprasRegistros);
     //validando el producto escogido para aplicar el total a pagar
-    if (form.value.productoescogido == "Tortas") {
-      this.totalPago = 2.00;
-    } else if (form.value.productoescogido == "Pan con pollo") {
-      this.totalPago = 1.50;
-    } else if (form.value.productoescogido == "Pupusas") {
-      this.totalPago = 0.25;
-    } else if (form.value.productoescogido == "Hot Dogs") {
-      this.totalPago = 1.00;
-    } else if (form.value.productoescogido == "Sandwich") {
-      this.totalPago = 0.5;
+    if (form.value.productoescogido == "Taladro") {
+      this.totalPago = 150;
+    } else if (form.value.productoescogido == "Plancha") {
+      this.totalPago = 16.50;
+    } else if (form.value.productoescogido == "Ventilador") {
+      this.totalPago = 54.95;
+    } else if (form.value.productoescogido == "Lamina de hierro") {
+      this.totalPago = 25.38;
+    } else if (form.value.productoescogido == "Lampara") {
+      this.totalPago = 11.95;
     }
 
+    console.log(form.value.duiCliente)
     //validando la cantidad de visitas del cliente
     //para detectar si aplica a descuento
     if (this.comprasRegistros.length > 0) {
       //evaluando si el cliente tiene mas de dos compras
       this.comprasRegistros.forEach(function (datos) {
-        if (form.value.nombre == datos.nombre) {
+        if (form.value.dui == datos.dui) {
           form.value.contador = form.value.contador + 1;
-          console.log(form.value.contador)
+          console.log(form.value.duiCliente)
         }
       })
     }
     //aplicando descuento
     if (form.value.contador > 2 && form.value.contador <= 4) {
       this.descuentoCliente = 0.05;
-      this.descuentoCliente = this.descuentoCliente * this.totalPago;
+      this.descuentoCliente = Math.round((this.descuentoCliente * this.totalPago)*100)/100;
     } else if (form.value.contador > 4) {
       this.descuentoCliente = 0.1;
-      this.descuentoCliente = this.descuentoCliente * this.totalPago;
+      this.descuentoCliente = Math.round((this.descuentoCliente * this.totalPago)*100)/100;
     }
     //creando arreglo
     this.compra = {
@@ -93,6 +94,7 @@ export class FormComprasComponent implements OnInit {
 
     //mostrando cantidad de registros
     this.cantidadRegistros = this.comprasRegistros.length;
+
   }
 
   //ver tabla de registros
