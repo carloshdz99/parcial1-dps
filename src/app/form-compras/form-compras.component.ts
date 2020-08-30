@@ -22,7 +22,8 @@ export class FormComprasComponent implements OnInit {
   duiCliente: string;
   //variable para mostrar tabla de registros
   verTabla: boolean = false;
-  contador = 1;
+  contador: number = 1;
+  
 
   //variable con los productos a vender
   articulosTienda = [
@@ -37,9 +38,11 @@ export class FormComprasComponent implements OnInit {
 
   //evento submit
   onSubmit(form) {
+    //console.log(form.value.contador)
     //console.log(form);
     //console.log(form.value.nombre);
     //console.log(this.comprasRegistros);
+    //validando el producto escogido para aplicar el total a pagar
     if (form.value.productoescogido == "Tortas") {
       this.totalPago = 2.00;
     } else if (form.value.productoescogido == "Pan con pollo") {
@@ -52,19 +55,22 @@ export class FormComprasComponent implements OnInit {
       this.totalPago = 0.5;
     }
 
+    //validando la cantidad de visitas del cliente
+    //para detectar si aplica a descuento
     if (this.comprasRegistros.length > 0) {
       //evaluando si el cliente tiene mas de dos compras
       this.comprasRegistros.forEach(function (datos) {
         if (form.value.nombre == datos.nombre) {
-          this.contador = this.contador + 1;
+          form.value.contador = form.value.contador + 1;
+          console.log(form.value.contador)
         }
       })
     }
     //aplicando descuento
-    if (this.contador > 2) {
+    if (form.value.contador > 2) {
       this.descuentoCliente = 0.05;
       this.descuentoCliente = this.descuentoCliente * this.totalPago;
-    } else if (this.contador > 4) {
+    } else if (form.value.contador > 4) {
       this.descuentoCliente = 0.1;
       this.descuentoCliente = this.descuentoCliente * this.totalPago;
     }
@@ -79,13 +85,15 @@ export class FormComprasComponent implements OnInit {
     
     //añadiendo valores al arreglo
     this.comprasRegistros.push(this.compra);
-    //
+    //iniciando la variable de nuevo a 1
+    form.value.contador=1;
   }
 
   //ver tabla de registros
   verTablaR() {
     this.verTabla = true;
   }
+  //ocultar tabla
   nverTablaR() {
     this.verTabla = false;
   }

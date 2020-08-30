@@ -1,85 +1,105 @@
 <nav class="navbar navbar-dark bg-dark">
     <div class="container">
         <h3 class="text-white">Tienda Don Diego</h3>
+        <div class="text-right">
+            <button class="btn btn-outline-light">Pareja de parcial</button>
+        </div>
     </div>
 </nav>
 
-<div class="container row mx-auto" [hidden]="verTabla==true">
-    <div class="row" *ngFor="let articulos of articulosTienda" id="articulos">
-        <div class="card border-primary col m-4" style="max-width: 16rem;">
-            <div class="card-header">{{articulos.nombre}} - {{articulos.codigoProducto}}</div>
-            <div class="card-body text-primary">
-                <h5 class="card-title">Precio ${{articulos.precio}}</h5>
-                <p>{{articulos.descripcion}}</p>
+<!-- inicio divs -->
+<div class="row">
+    <!-- cards-->
+    <div class="col-sm-6 py-3">
+        <div class="container row mx-auto" [hidden]="verTabla==true">
+            <div *ngFor="let articulos of articulosTienda" id="articulos">
+                <div class="card border-primary col m-2" style="max-width: 16rem;">
+                    <div class="card-header">{{articulos.nombre}} - {{articulos.codigoProducto}}</div>
+                    <div class="card-body text-primary">
+                        <h5 class="card-title">Precio ${{articulos.precio}}</h5>
+                        <p>{{articulos.descripcion}}</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <!-- fin cards-->
 
-<div class="" [hidden]="verTabla==true">
-    <div class="px-3 mx-auto" style="max-width: 60rem;">
-        <div class="container">
-            <form  #form="ngForm" (ngSubmit)="onSubmit(form)">
-                <!-- form group de nombre cliente -->
-                <div class="form-group col-sm-4">
-                    <label>Nombre Cliente:</label>
-                    <input type="text" required name="nombre" [(ngModel)]="nombre" #nombrevalidar="ngModel" class="form-control">
-                    <div *ngIf="nombrevalidar.invalid && (nombrevalidar.dirty || nombrevalidar.touched)">
-                        <p class="text-danger">El nombre es requerido</p>
-                    </div>
+    <!-- inicio formulario -->
+    <div class="col py-3">
+        <div class="center-block" [hidden]="verTabla==true">
+            <div class="px-3 mx-auto" style="max-width: 60rem;">
+                <div class="container">
+                    <form #form="ngForm" (ngSubmit)="onSubmit(form)">
+                        <input type="number" hidden name="contador" [(ngModel)]="contador" [value]="contador">
+                        <!-- form group de nombre cliente -->
+                        <div class="form-group col-sm-8">
+                            <label>Nombre Cliente:</label>
+                            <input type="text" required name="nombre" [(ngModel)]="nombre" #nombrevalidar="ngModel"
+                            onkeypress="return event.charCode >= 65"  class="form-control">
+                            <div *ngIf="nombrevalidar.invalid && (nombrevalidar.dirty || nombrevalidar.touched)">
+                                <p class="text-danger">El nombre es requerido</p>
+                            </div>
+                        </div>
+                        <!-- fin nombre cliente-->
+
+                        <!-- dui cliente -->
+                        <div class="form-group col-sm-8">
+                            <label>Dui cliente:</label>
+                            <input type="text" required name="duiCliente" [(ngModel)]="duiCliente" #duivalidar="ngModel"
+                             name="dui" class="form-control" pattern="[0-9]{6}\-[0-9]{1}"
+                                placeholder="######-#">
+                            <div *ngIf="duivalidar.invalid && (duivalidar.dirty || duivalidar.touched)">
+                                <p class="text-danger">Formato invalido</p>
+                            </div>
+                        </div>
+                        <!-- fin cliente -->
+
+                        <!-- campos para escoger producto y calcular monto -->
+                        <div class="form-group col-sm-8">
+                            <label>Productos:</label>
+                            <select required class="form-control" name="productoescogido" [(ngModel)]="productoEscogido"
+                                #productovalidar>
+                                <option *ngFor="let art of articulosTienda" [value]="art.nombre">{{art.nombre}}</option>
+                            </select>
+                            <div *ngIf="productovalidar.invalid && (productovalidar.dirty || productovalidar.touched)">
+                                <p class="text-danger">El producto es requerido</p>
+                            </div>
+                        </div>
+                        <!-- fin producto y calculo monto -->
+
+                        <!-- boton de envio de eventos -->
+                        <div class="form-group col-sm-8">
+                            <button type="submit" class="btn btn-dark" [disabled]="!form.form.valid">Comprar</button>
+                        </div>
+                        <!-- fin evento submit -->
+                    </form>
+
                 </div>
-                <!-- fin nombre cliente-->
-
-                <!-- dui cliente -->
-                <div class="form-group col-sm-4">
-                    <label>Dui cliente:</label>
-                    <input type="text" required name="duiCliente" [(ngModel)]="duiCliente" #duivalidar="ngModel"  onkeypress="return event.charCode >= 48" name="dui"
-                        class="form-control">
-                    <div *ngIf="duivalidar.invalid && (duivalidar.dirty || duivalidar.touched)">
-                        <p class="text-danger">El DUI es requerido</p>
-                    </div>
-                </div>
-                <!-- fin cliente -->
-
-                <!-- campos para escoger producto y calcular monto -->
-                <div class="form-group col-sm-4">
-                    <label>Productos:</label>
-                    <select required class="form-control" name="productoescogido"
-                    [(ngModel)]="productoEscogido" #productovalidar >
-                        <option *ngFor="let art of articulosTienda" [value]="art.nombre">{{art.codigoProducto}}</option>
-                    </select>
-                    <div *ngIf="productovalidar.invalid && (productovalidar.dirty || productovalidar.touched)">
-                        <p class="text-danger">El producto es requerido</p>
-                    </div>
-                </div>
-                <!-- fin producto y calculo monto -->
-
-                <!-- boton de envio de eventos -->
-                <div class="form-group col-sm-6">
-                    <button type="submit" class="btn btn-dark" [disabled]="!form.form.valid">Comprar</button>
-                </div>
-                <!-- fin evento submit -->
-            </form>
-
+            </div>
         </div>
+        <!-- botones para mostrar y ocultar los registros -->
+        <div class="text-center py-5">
+            <button class="btn btn-dark" (click)="verTablaR()" [hidden]="verTabla==true">Ver Registros</button>
+            <button class="btn btn-dark" (click)="nverTablaR()" [hidden]="verTabla==false">Regresar al
+                formulario</button>
+        </div>
+        <!-- fin de mostrar los registros   -->
     </div>
+    <!--fin formulario-->
 </div>
+<!-- fin divs -->
 
-<!-- botones para mostrar y ocultar los registros -->
-<div class="text-center py-5">
-    <button class="btn btn-dark" (click)="verTablaR()" [hidden]="verTabla==true">Ver Registros</button>
-    <button class="btn btn-dark" (click)="nverTablaR()" [hidden]="verTabla==false">Regresar al formulario</button>
-</div>
-<!-- fin de mostrar los registros   -->
+
 
 <!-- tabla de registros -->
-<div class="container py-5">
+<div class="container py-3">
     <table class="table" [hidden]="verTabla==false">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Nombre:</th>
                 <th scope="col">Dui:</th>
-                <th scope="col">Producto y codigo:</th>
+                <th scope="col">Producto:</th>
                 <th scope="col">Pago:</th>
                 <th scope="col">Descuento:</th>
             </tr>
@@ -89,8 +109,8 @@
                 <th>{{registros.nombre}}</th>
                 <th>{{registros.dui}}</th>
                 <th>{{registros.productoComprado}}</th>
-                <th>{{registros.totalCompra}}</th>
-                <th>{{registros.descuento}}</th>
+                <th>${{registros.totalCompra}}</th>
+                <th>${{registros.descuento}}</th>
             </tr>
         </tbody>
     </table>
