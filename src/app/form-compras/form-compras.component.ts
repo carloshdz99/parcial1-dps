@@ -6,7 +6,8 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
   styleUrls: ['./form-compras.component.css']
 })
 export class FormComprasComponent implements OnInit {
-  
+  //ver estudiantes
+  estudiantebool: boolean = false;
   //variables de registro
   nombre: string;
   productoEscogido: string;
@@ -23,6 +24,8 @@ export class FormComprasComponent implements OnInit {
   //variable para mostrar tabla de registros
   verTabla: boolean = false;
   contador: number = 1;
+  //cuenta la cantidad de registros
+  cantidadRegistros: number = 0;
   
 
   //variable con los productos a vender
@@ -67,7 +70,7 @@ export class FormComprasComponent implements OnInit {
       })
     }
     //aplicando descuento
-    if (form.value.contador > 2) {
+    if (form.value.contador > 2 && form.value.contador <= 4) {
       this.descuentoCliente = 0.05;
       this.descuentoCliente = this.descuentoCliente * this.totalPago;
     } else if (form.value.contador > 4) {
@@ -87,15 +90,25 @@ export class FormComprasComponent implements OnInit {
     this.comprasRegistros.push(this.compra);
     //iniciando la variable de nuevo a 1
     form.value.contador=1;
+
+    //mostrando cantidad de registros
+    this.cantidadRegistros = this.comprasRegistros.length;
   }
 
   //ver tabla de registros
   verTablaR() {
     this.verTabla = true;
+    this.cantidadRegistros = this.comprasRegistros.length;
   }
   //ocultar tabla
   nverTablaR() {
     this.verTabla = false;
+  }
+  verEstudiantes(){
+    this.estudiantebool = true;
+  }
+  nverEstudiantes(){
+    this.estudiantebool = false;
   }
 
   ngOnInit(): void {

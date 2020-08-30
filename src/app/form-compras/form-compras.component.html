@@ -2,13 +2,41 @@
     <div class="container">
         <h3 class="text-white">Tienda Don Diego</h3>
         <div class="text-right">
-            <button class="btn btn-outline-light">Pareja de parcial</button>
+            <button class="btn btn-outline-light" (click)="verEstudiantes()" [hidden]="estudiantebool==true">Pareja de
+                parcial</button>
+            <button class="btn btn-outline-light" (click)="nverEstudiantes()" [hidden]="estudiantebool==false">Pareja de
+                parcial</button>
         </div>
     </div>
 </nav>
 
+<!-- mostrando estudiantes de parcial -->
+<div class="container" [hidden]="estudiantebool==false">
+    <div class="row">
+        <div class="col m-4 card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card-header">MH040413</div>
+            <div class="card-body">
+                <h5 class="card-title">Zulma Iveth Mejia Hernandez</h5>
+                <p class="card-text">
+                    Grupo de laboratorio: 02L
+                </p>
+            </div>
+        </div>
+        <div class="col m-4 card text-white bg-primary mb-3" style="max-width: 18rem;">
+            <div class="card-header">HF170965</div>
+            <div class="card-body">
+                <h5 class="card-title">Carlos Josué Hernández Funes</h5>
+                <p class="card-text">
+                    Grupo de laboratorio: 02L
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fin estudiantes -->
+
 <!-- inicio divs -->
-<div class="row">
+<div class="row" [hidden]="estudiantebool==true">
     <!-- cards-->
     <div class="col-sm-6 py-3">
         <div class="container row mx-auto" [hidden]="verTabla==true">
@@ -36,7 +64,7 @@
                         <div class="form-group col-sm-8">
                             <label>Nombre Cliente:</label>
                             <input type="text" required name="nombre" [(ngModel)]="nombre" #nombrevalidar="ngModel"
-                            onkeypress="return event.charCode >= 65"  class="form-control">
+                                onkeypress="return event.charCode >= 65" class="form-control">
                             <div *ngIf="nombrevalidar.invalid && (nombrevalidar.dirty || nombrevalidar.touched)">
                                 <p class="text-danger">El nombre es requerido</p>
                             </div>
@@ -47,8 +75,7 @@
                         <div class="form-group col-sm-8">
                             <label>Dui cliente:</label>
                             <input type="text" required name="duiCliente" [(ngModel)]="duiCliente" #duivalidar="ngModel"
-                             name="dui" class="form-control" pattern="[0-9]{6}\-[0-9]{1}"
-                                placeholder="######-#">
+                                name="dui" class="form-control" pattern="[0-9]{6}\-[0-9]{1}" placeholder="######-#">
                             <div *ngIf="duivalidar.invalid && (duivalidar.dirty || duivalidar.touched)">
                                 <p class="text-danger">Formato invalido</p>
                             </div>
@@ -73,6 +100,7 @@
                             <button type="submit" class="btn btn-dark" [disabled]="!form.form.valid">Comprar</button>
                         </div>
                         <!-- fin evento submit -->
+                        <p>Cantidad de registros {{cantidadRegistros}}</p>
                     </form>
 
                 </div>
@@ -93,8 +121,9 @@
 
 
 <!-- tabla de registros -->
-<div class="container py-3">
-    <table class="table" [hidden]="verTabla==false">
+<div class="container py-3" [hidden]="verTabla==false">
+    <p>Cantidad de registros {{cantidadRegistros}}</p>
+    <table class="table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">Nombre:</th>
