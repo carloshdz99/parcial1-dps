@@ -57,8 +57,6 @@ export class FormComprasComponent implements OnInit {
     } else if (form.value.productoescogido == "Lampara") {
       this.totalPago = 11.95;
     }
-
-    console.log(form.value.duiCliente)
     //validando la cantidad de visitas del cliente
     //para detectar si aplica a descuento
     if (this.comprasRegistros.length > 0) {
