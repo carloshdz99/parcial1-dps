@@ -64,8 +64,7 @@ export class FormComprasComponent implements OnInit {
       //evaluando si el cliente tiene mas de dos compras
       this.comprasRegistros.forEach(function (datos) {
         if (form.value.dui == datos.dui) {
-          form.value.contador = form.value.contador + 1;
-          console.log(form.value.duiCliente)
+          form.value.contador++;
         }
       })
     }

@@ -75,7 +75,7 @@
                         <div class="form-group col-sm-8">
                             <label>Dui cliente:</label>
                             <input type="text" required name="duiCliente" [(ngModel)]="duiCliente" #duivalidar="ngModel"
-                                name="dui" class="form-control" pattern="[0-9]{8}\-[0-9]{1}" placeholder="########-#">
+                                name="dui" class="form-control" pattern="^[0-9]{8}\-[0-9]{1}" placeholder="########-#">
                             <div *ngIf="duivalidar.invalid && (duivalidar.dirty || duivalidar.touched)">
                                 <p class="text-danger">Formato invalido</p>
                             </div>
