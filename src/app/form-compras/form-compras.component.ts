@@ -19,6 +19,7 @@ export class FormComprasComponent implements OnInit {
   totalPago: number;
   //descuento a cliente
   descuentoCliente: number = 0;
+  porcentajeDescuento: string ="0%";
   //dui del cliente
   duiCliente: string;
   //variable para mostrar tabla de registros
@@ -70,18 +71,23 @@ export class FormComprasComponent implements OnInit {
     }
     //aplicando descuento
     if (form.value.contador > 2 && form.value.contador <= 4) {
+      this.porcentajeDescuento="5%";
       this.descuentoCliente = 0.05;
       this.descuentoCliente = Math.round((this.descuentoCliente * this.totalPago)*100)/100;
     } else if (form.value.contador > 4) {
+      this.porcentajeDescuento="10%";
       this.descuentoCliente = 0.1;
       this.descuentoCliente = Math.round((this.descuentoCliente * this.totalPago)*100)/100;
     }
+
+    this.totalPago = Math.round((this.totalPago - this.descuentoCliente)*100)/100;
     //creando arreglo
     this.compra = {
       "nombre": form.value.nombre,
       "dui": form.value.dui,
       "productoComprado": form.value.productoescogido,
       "totalCompra": this.totalPago,
+      "porcentajeDescuento": this.porcentajeDescuento,
       "descuento": this.descuentoCliente
     };
     
@@ -92,7 +98,8 @@ export class FormComprasComponent implements OnInit {
 
     //mostrando cantidad de registros
     this.cantidadRegistros = this.comprasRegistros.length;
-
+    this.porcentajeDescuento="0%";
+    this.descuentoCliente=0;
   }
 
   //ver tabla de registros
