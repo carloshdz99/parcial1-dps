@@ -120,6 +120,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "Tienda-Diego"
+    }
+  },
+  "defaultProject": "Tienda-Diego",
+  "cli": {
+    "analytics": "37174e42-2505-4018-ae55-ce9b989db6fc"
+  }
 }
